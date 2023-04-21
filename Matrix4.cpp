@@ -156,25 +156,43 @@ Matrix4x4 Matrix4::MakeScaleMatrix(const Vector3 scale) {
 
 }
 
-/*
 
-// 回転行列の作成(X)
+// 回転行列の作成(X軸周り：YZ平面)
 Matrix4x4 Matrix4::MekeRoatateXMatrix(float rad) {
 
+	return Matrix4x4{
+		1,0,0,0,
+		0,std::cos(rad),std::sin(rad), 0,
+		0,-std::sin(rad),std::cos(rad),0,
+		0,0,0,1,
+	};
+
 }
 
-// 回転行列の作成(Y)
+// 回転行列の作成(Y軸周り：XZ平面)
 Matrix4x4 Matrix4::MekeRoatateYMatrix(float rad) {
 
+	return Matrix4x4{
+		std::cos(rad),0,-std::sin(rad),0,
+		0,1,0,0,
+		std::sin(rad),0,std::cos(rad),0,
+		0,0,0,1,
+	};
 
 }
 
-// 回転行列の作成(Z)
+// 回転行列の作成(Z軸周り：XY平面)
 Matrix4x4 Matrix4::MekeRoatateZMatrix(float rad) {
 
+	return Matrix4x4{
+		std::cos(rad),std::sin(rad),0,0,
+		-std::sin(rad),std::cos(rad),0,0,
+		0,0,1,0,
+		0,0,0,1,
+	};
+
 }
 
-*/
 
 // 座標変換
 Vector3 Matrix4::Transform(const Vector3& v, const Matrix4x4& m) {

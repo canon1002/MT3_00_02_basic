@@ -12,22 +12,13 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 	Novice::Initialize(kWindowTitle, kWindowSizeX, kWindowSizeY);
 
 	// 行列・ベクトルの宣言
-	Vector3 translate{ 4.1f,2.6f,0.8f };
-	Vector3 scale{ 1.5f,5.2f,7.3f };
-	Vector3 point{ 2.3f,3.8f,1.4f };
-	Matrix4x4 transformMatrix{
-		1.0f,2.0f,3.0f,4.0f,
-		3.0f,1.0f,1.0f,2.0f,
-		1.0f,4.0f,2.0f,3.0f,
-		2.0f,2.0f,1.0f,3.0f
-	};
+	Vector3 rotate{ 0.4f,1.43f,-0.8f };
 
 	// 行列の計算
-	Matrix4x4 translateMatrix = Matrix4::MakeTranslateMatrix(translate);
-	Matrix4x4 scaleMatrix = Matrix4::MakeScaleMatrix(scale);
-	Vector3 transformed = Matrix4::Transform(point, transformMatrix);
-	
-
+	Matrix4x4 rotateXMatrix = Matrix4::MekeRoatateXMatrix(rotate.x);
+	Matrix4x4 rotateYMatrix = Matrix4::MekeRoatateYMatrix(rotate.y);
+	Matrix4x4 rotateZMatrix = Matrix4::MekeRoatateZMatrix(rotate.z);
+	Matrix4x4 rotateXYZMatrix = Matrix4::Multiply(rotateXMatrix, Matrix4::Multiply(rotateYMatrix, rotateZMatrix));
 	
 	// 表示用の変数
 	const int kRowHeight = 30;
@@ -59,9 +50,10 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 		///
 
 		// 計算結果の表示
-		Matrix4::VectorScreenPrintf(0, 0, transformed, "transfomed");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 , translateMatrix, "translateMatrix");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2*3, scaleMatrix, "scaleMatrix");
+		Matrix4::MatrixScreenPrintf(0, 0, rotateXMatrix, "rotateXMatrix");
+		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 3, rotateYMatrix, "rotateYMatrix");
+		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 6, rotateZMatrix, "rotateZMatrix");
+		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 9, rotateXYZMatrix, "rotateXYZMatrix");
 
 		///
 		/// ↑描画処理ここまで
