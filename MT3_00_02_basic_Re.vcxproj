@@ -16,6 +16,7 @@
     <ProjectGuid>{f4fbbf13-98ef-463c-9ce8-c0d1cb0f138f}</ProjectGuid>
     <RootNamespace>MT3_00_02_basic_Re</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MT3_00_basic</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">

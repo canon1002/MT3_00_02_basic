@@ -1,4 +1,5 @@
 #pragma once
+#include"Vector3.h"
 
 //4x4の行列を表す構造体
 typedef struct Matrix4x4 {
@@ -56,9 +57,48 @@ public: // 4x4行列 メゾット
 	static Matrix4x4 MakeIdentity();
 
 	/// <summary>
+	// 平行移動行列の作成
+	/// <summary>
+	static Matrix4x4 MakeTranslateMatrix(const Vector3 translate);
+
+	/// <summary>
+	// 拡大縮小行列の作成
+	/// <summary>
+	static Matrix4x4 MakeScaleMatrix(const Vector3 scale);
+
+	/// <summary>
+	// 回転行列の作成(X)
+	/// <summary>
+	static Matrix4x4 MekeRoatateXMatrix(float rad);
+
+	/// <summary>
+	// 回転行列の作成(Y)
+	/// <summary>
+	static Matrix4x4 MekeRoatateYMatrix(float rad);
+	
+	/// <summary>
+	// 回転行列の作成(Z)
+	/// <summary>
+	static Matrix4x4 MekeRoatateZMatrix(float rad);
+
+	/// <summary>
+	// 座標変換
+	/// <summary>
+	static Vector3 Transform(const Vector3& v, const Matrix4x4& m);
+
+
+	/// 描画関数 ///
+
+
+	/// <summary>
 	/// 4x4行列の数値表示
 	/// </summary>
 	static void MatrixScreenPrintf(int x, int y, Matrix4x4& matrix, const char* label);
+
+	/// <summary>
+	/// 3次元ベクトルの数値表示
+	/// <summary>
+	static void VectorScreenPrintf(int x, int y, Vector3& vector, const char* label);
 
 };
 

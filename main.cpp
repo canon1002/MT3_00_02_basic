@@ -11,30 +11,23 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, kWindowSizeX, kWindowSizeY);
 
-	// 行列の宣言
-	Matrix4x4 m1 = { 
-		3.2f,0.7f,9.6f,4.4f,
-		5.5f,1.3f,7.8f,2.1f,
-		6.9f,8.0f,2.6f,1.0f,
-		0.5f,7.2f,5.1f,3.3f
-	};
-
-	Matrix4x4 m2 = {
-		4.1f,6.5f,3.3f,2.2f,
-		8.8f,0.6f,9.9f,7.7f,
-		1.1f,5.5f,6.6f,0.0f,
-		3.3f,9.9f,8.8f,2.2f
+	// 行列・ベクトルの宣言
+	Vector3 translate{ 4.1f,2.6f,0.8f };
+	Vector3 scale{ 1.5f,5.2f,7.3f };
+	Vector3 point{ 2.3f,3.8f,1.4f };
+	Matrix4x4 transformMatrix{
+		1.0f,2.0f,3.0f,4.0f,
+		3.0f,1.0f,1.0f,2.0f,
+		1.0f,4.0f,2.0f,3.0f,
+		2.0f,2.0f,1.0f,3.0f
 	};
 
 	// 行列の計算
-	Matrix4x4 resultAdd = Matrix4::Add(m1, m2);
-	Matrix4x4 resultSubtract = Matrix4::Subtract(m1, m2);
-	Matrix4x4 resultMulttiply = Matrix4::Multiply(m1, m2);
-	Matrix4x4 inverseM1 = Matrix4::Inverse(m1);
-	Matrix4x4 inverseM2 = Matrix4::Inverse(m2);
-	Matrix4x4 transposeM1 = Matrix4::Transpose(m1);
-	Matrix4x4 transposeM2 = Matrix4::Transpose(m2);
-	Matrix4x4 identity = Matrix4::MakeIdentity();
+	Matrix4x4 translateMatrix = Matrix4::MakeTranslateMatrix(translate);
+	Matrix4x4 scaleMatrix = Matrix4::MakeScaleMatrix(scale);
+	Vector3 transformed = Matrix4::Transform(point, transformMatrix);
+	
+
 	
 	// 表示用の変数
 	const int kRowHeight = 30;
@@ -66,14 +59,9 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 		///
 
 		// 計算結果の表示
-		Matrix4::MatrixScreenPrintf(0, 0, resultAdd, "Add");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 4, resultSubtract, "Subtract");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 4 * 2, resultMulttiply, "Multtiply");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 4 * 3, inverseM1, "inverseM1");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 4 * 4, inverseM2, "inverseM2");
-		Matrix4::MatrixScreenPrintf(kColumnWidth, 0, transposeM1, "transposeM1");
-		Matrix4::MatrixScreenPrintf(kColumnWidth, kRowHeight * 4, transposeM2, "transposeM2");
-		Matrix4::MatrixScreenPrintf(kColumnWidth, kRowHeight * 4 * 2, identity, "identity");
+		Matrix4::VectorScreenPrintf(0, 0, transformed, "transfomed");
+		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 , translateMatrix, "translateMatrix");
+		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2*3, scaleMatrix, "scaleMatrix");
 
 		///
 		/// ↑描画処理ここまで
