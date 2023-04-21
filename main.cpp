@@ -12,13 +12,13 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 	Novice::Initialize(kWindowTitle, kWindowSizeX, kWindowSizeY);
 
 	// 行列・ベクトルの宣言
+	Vector3 scale{ 1.2f,0.79f,-2.1f };
 	Vector3 rotate{ 0.4f,1.43f,-0.8f };
+	Vector3 translate{ 2.7f,-4.15f,1.57f };
 
 	// 行列の計算
-	Matrix4x4 rotateXMatrix = Matrix4::MekeRoatateXMatrix(rotate.x);
-	Matrix4x4 rotateYMatrix = Matrix4::MekeRoatateYMatrix(rotate.y);
-	Matrix4x4 rotateZMatrix = Matrix4::MekeRoatateZMatrix(rotate.z);
-	Matrix4x4 rotateXYZMatrix = Matrix4::Multiply(rotateXMatrix, Matrix4::Multiply(rotateYMatrix, rotateZMatrix));
+	Matrix4x4 worldMatrix = Matrix4::MakeAffineMatrix(scale, rotate, translate);
+
 	
 	// 表示用の変数
 	const int kRowHeight = 30;
@@ -50,10 +50,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 		///
 
 		// 計算結果の表示
-		Matrix4::MatrixScreenPrintf(0, 0, rotateXMatrix, "rotateXMatrix");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 3, rotateYMatrix, "rotateYMatrix");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 6, rotateZMatrix, "rotateZMatrix");
-		Matrix4::MatrixScreenPrintf(0, kRowHeight * 2 * 9, rotateXYZMatrix, "rotateXYZMatrix");
+		Matrix4::MatrixScreenPrintf(0, 0, worldMatrix, "worldMatrix");
 
 		///
 		/// ↑描画処理ここまで

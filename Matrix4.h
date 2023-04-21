@@ -86,6 +86,11 @@ public: // 4x4行列 メゾット
 	/// <summary>
 	static Vector3 Transform(const Vector3& v, const Matrix4x4& m);
 
+	/// <summary>
+	// アフィン行列の作成
+	/// <summary>
+	static Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
+
 
 	/// 描画関数 ///
 

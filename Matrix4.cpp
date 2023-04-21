@@ -208,6 +208,23 @@ Vector3 Matrix4::Transform(const Vector3& v, const Matrix4x4& m) {
 	return result;
 }
 
+// アフィン行列の作成
+Matrix4x4 Matrix4::MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
+
+	// 回転行列を作成
+	Matrix4x4 rotateXMatrix = Matrix4::MekeRoatateXMatrix(rotate.x);
+	Matrix4x4 rotateYMatrix = Matrix4::MekeRoatateYMatrix(rotate.y);
+	Matrix4x4 rotateZMatrix = Matrix4::MekeRoatateZMatrix(rotate.z);
+	Matrix4x4 rotateXYZMatrix = Matrix4::Multiply(rotateXMatrix, Matrix4::Multiply(rotateYMatrix, rotateZMatrix));
+
+	return Matrix4x4{
+		scale.x * rotateXYZMatrix.m[0][0],	scale.x * rotateXYZMatrix.m[0][1],	scale.x * rotateXYZMatrix.m[0][2],0,
+		scale.y * rotateXYZMatrix.m[1][0],	scale.y * rotateXYZMatrix.m[1][1],	scale.y * rotateXYZMatrix.m[1][2],0,
+		scale.z * rotateXYZMatrix.m[2][0],	scale.z * rotateXYZMatrix.m[2][1],	scale.z * rotateXYZMatrix.m[2][2],0,
+		translate.x,translate.y,translate.z,1
+	};
+
+}
 
 
 /// 描画関数 ///
