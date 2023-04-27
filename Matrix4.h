@@ -6,7 +6,7 @@ typedef struct Matrix4x4 {
 	float m[4][4] = {};
 };
 
-class Matrix4 {
+class Matrix4x4 {
 
 public: // 4x4行列 メゾット
 
