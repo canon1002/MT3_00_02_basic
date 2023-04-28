@@ -1,5 +1,5 @@
 #include <Novice.h>
-#include"Matrix4.h"
+#include"Matrix4x4.h"
 
 const char kWindowTitle[] = "LD2A_12_ワタナベユウタ_";
 const int kWindowSizeX = 1280;
@@ -17,7 +17,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 	Vector3 translate{ 2.7f,-4.15f,1.57f };
 
 	// 行列の計算
-	Matrix4x4 worldMatrix = Matrix4::MakeAffineMatrix(scale, rotate, translate);
+	Matrix4x4 worldMatrix = Matrix4x4Ex::MakeAffineMatrix(scale, rotate, translate);
 
 	
 	// 表示用の変数
@@ -50,7 +50,7 @@ int WINAPI WinMain(_In_ HINSTANCE,_In_opt_ HINSTANCE,_In_ LPSTR,_In_ int) {
 		///
 
 		// 計算結果の表示
-		Matrix4::MatrixScreenPrintf(0, 0, worldMatrix, "worldMatrix");
+		Matrix4x4Ex::MatrixScreenPrintf(0, 0, worldMatrix, "worldMatrix");
 
 		///
 		/// ↑描画処理ここまで
