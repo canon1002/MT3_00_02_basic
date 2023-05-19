@@ -196,7 +196,7 @@ Matrix4x4 Matrix4x4Funk::MakeRoatateZMatrix(float rad) {
 
 // 座標変換
 Vector3 Matrix4x4Funk::Transform(const Vector3& v, const Matrix4x4& m) {
-	Vector3 result;
+	Vector3 result = {};
 	result.x = v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0] + 1.0f * m.m[3][0];
 	result.y = v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1] + 1.0f * m.m[3][1];
 	result.z = v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2] + 1.0f * m.m[3][2];
@@ -212,16 +212,16 @@ Vector3 Matrix4x4Funk::Transform(const Vector3& v, const Matrix4x4& m) {
 Matrix4x4 Matrix4x4Funk::MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 
 	// 回転行列を作成
-	Matrix4x4 rotatExMatrix = Matrix4x4Funk::MakeRoatateXMatrix(rotate.x);
+	Matrix4x4 rotateXMatrix = Matrix4x4Funk::MakeRoatateXMatrix(rotate.x);
 	Matrix4x4 rotateYMatrix = Matrix4x4Funk::MakeRoatateYMatrix(rotate.y);
 	Matrix4x4 rotateZMatrix = Matrix4x4Funk::MakeRoatateZMatrix(rotate.z);
-	Matrix4x4 rotatExYZMatrix = Matrix4x4Funk::Multiply(rotatExMatrix, Matrix4x4Funk::Multiply(rotateYMatrix, rotateZMatrix));
+	Matrix4x4 rotateXYZMatrix = Matrix4x4Funk::Multiply(rotateXMatrix, Matrix4x4Funk::Multiply(rotateYMatrix, rotateZMatrix));
 
 	return Matrix4x4{
-		scale.x * rotatExYZMatrix.m[0][0],	scale.x * rotatExYZMatrix.m[0][1],	scale.x * rotatExYZMatrix.m[0][2],0,
-		scale.y * rotatExYZMatrix.m[1][0],	scale.y * rotatExYZMatrix.m[1][1],	scale.y * rotatExYZMatrix.m[1][2],0,
-		scale.z * rotatExYZMatrix.m[2][0],	scale.z * rotatExYZMatrix.m[2][1],	scale.z * rotatExYZMatrix.m[2][2],0,
-		translate.x,translate.y,translate.z,1
+		scale.x * rotateXYZMatrix.m[0][0],	scale.x * rotateXYZMatrix.m[0][1],	scale.x * rotateXYZMatrix.m[0][2],0,
+		scale.y * rotateXYZMatrix.m[1][0],	scale.y * rotateXYZMatrix.m[1][1],	scale.y * rotateXYZMatrix.m[1][2],0,
+		scale.z * rotateXYZMatrix.m[2][0],	scale.z * rotateXYZMatrix.m[2][1],	scale.z * rotateXYZMatrix.m[2][2],0,
+		translate.x,						translate.y,						translate.z,					  1
 	};
 
 }
@@ -234,7 +234,7 @@ Matrix4x4 Matrix4x4Funk::MakePerspectiveMatrix(float fovY, float aspectRatio, fl
 	(1 / aspectRatio) * (1 / std::tan(fovY / 2)),0,0,0,
 	0,(1 / std::tan(fovY / 2)),0,0,
 	0,0,farClip / (farClip - nearClip),1,
-	0,0,nearClip / (nearClip - farClip),0
+	0,0,nearClip / (nearClip - farClip),1
 	};
 
 }
