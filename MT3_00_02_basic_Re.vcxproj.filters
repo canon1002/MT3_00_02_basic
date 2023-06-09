@@ -117,5 +117,7 @@
     <ClInclude Include="Matrix4x4Funk.h" />
     <ClInclude Include="Vector3Funk.h" />
     <ClInclude Include="Vector2Float.h" />
+    <ClInclude Include="MathObject.h" />
+    <ClInclude Include="MathTool.h" />
   </ItemGroup>
 </Project>
