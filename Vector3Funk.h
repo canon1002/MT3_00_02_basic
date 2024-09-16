@@ -1,12 +1,12 @@
 #pragma once
 #include<Vector3.h>
-#include<cmath>
+//#include<cmath>
 #include<Novice.h>
-#include"MathTool.h"
+
 
 class Vector3Funk
 {
-public: //ƒƒ“ƒoŠÖ”(ƒƒ\ƒbƒh)
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°(ãƒ¡ã‚½ãƒƒãƒ‰)
 
 	
 
@@ -15,7 +15,7 @@ public: //ƒƒ“ƒoŠÖ”(ƒƒ\ƒbƒh)
 	
 
 	/// <summary>
-	/// ŽOŽŸŒ³s—ñ‚Ì•\Ž¦
+	/// ä¸‰æ¬¡å…ƒè¡Œåˆ—ã®è¡¨ç¤º
 	/// </summary>
 	/// <param name="posX"></param>
 	/// <param name="posY"></param>

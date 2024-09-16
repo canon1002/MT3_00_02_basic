@@ -1,5 +1,15 @@
 #pragma once
 #include "Vector3Funk.h"
+#include "Matrix4x4Funk.h"
+#include <Novice.h>
+
+/// <summary>
+/// 球
+/// </summary>
+struct Sphere {
+	Vector3 center;
+	float radius;
+};
 
 /// <summary>
 /// 直線
@@ -27,4 +37,3 @@ struct Segment
 	Vector3 origin;
 	Vector3 diff;
 };
-

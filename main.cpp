@@ -1,8 +1,9 @@
 #include <Novice.h>
 #include "Matrix4x4Funk.h"
-#include"Vector3Funk.h"
-#include "MathObject.h"
+#include "Vector3Funk.h"
+#include "MathTool.h"
 #include <stdint.h>
+#include <ImGuiManager.h>
 
 const char kWindowTitle[] = "LD2A_12_ワタナベユウタ_";
 const float kWindowSizeX = 1280.0f;
@@ -12,16 +13,17 @@ const float kWindowSizeY = 720.0f;
 int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// ライブラリの初期化
-	Novice::Initialize(kWindowTitle, kWindowSizeX, kWindowSizeY);
+	Novice::Initialize(kWindowTitle, int(kWindowSizeX), int(kWindowSizeY));
 
 	// 行列・ベクトルの宣言
 	Vector3 rotate = {};
 	Vector3 translate = {};
-	Vector3 cameraPosition = { 0.0f,0.0f,-10.0f };
+	Vector3 cameraPosition = { 0.0f,1.9f,-6.49f };
+	Vector3 cameraRotate = { 0.26f,0.0f,0.0f };
 
 	// ワールドからスクリーンへ
 	Matrix4x4 worldMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotate, translate);
-	Matrix4x4 cameraMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f }, cameraPosition);
+	Matrix4x4 cameraMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraPosition);
 	Matrix4x4 viewMatrix = Matrix4x4Funk::Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = Matrix4x4Funk::MakePerspectiveMatrix(0.45f, kWindowSizeX / kWindowSizeY, 0.1f, 100.0f);
 	Matrix4x4 viewprojectionMatrix = Matrix4x4Funk::Multiply(viewMatrix, projectionMatrix);
@@ -36,7 +38,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// 課題用変数　ここから
 	//
 
-	
+	// 球
+	Sphere sphere = {
+		{0,0,0} ,
+		1,
+	};
 
 	//
 	//　課題用変数　ここまで
@@ -60,18 +66,22 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		/// ↓更新処理ここから
 		///
 
-		
 
 		// 行列の更新
 		worldMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, rotate, translate);
-		cameraMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, { 0.0f,0.0f,0.0f }, cameraPosition);
+		cameraMatrix = Matrix4x4Funk::MakeAffineMatrix({ 1.0f,1.0f,1.0f }, cameraRotate, cameraPosition);
 		viewMatrix = Matrix4x4Funk::Inverse(cameraMatrix);
 		projectionMatrix = Matrix4x4Funk::MakePerspectiveMatrix(0.45f, kWindowSizeX / kWindowSizeY, 0.1f, 100.0f);
 		viewprojectionMatrix = Matrix4x4Funk::Multiply(viewMatrix, projectionMatrix);
 		worldViewProjectionMatrix = Matrix4x4Funk::Multiply(worldMatrix, viewprojectionMatrix);
 		viewportMatrix = Matrix4x4Funk::MakeViewportMatrix(0, 0, kWindowSizeX, kWindowSizeY, 0.0f, 1.0f);
 
-		
+		ImGui::Begin("Window");
+		ImGui::DragFloat3("cameraTransrate", &cameraPosition.x, 0.01f);
+		ImGui::DragFloat3("cameraRotate", &cameraRotate.x, 0.01f);
+		ImGui::DragFloat3("SphereCenter", &sphere.center.x, 0.01f);
+		ImGui::DragFloat("SphereRadius", &sphere.radius, 0.01f);
+		ImGui::End();
 
 		///
 		/// ↑更新処理ここまで
@@ -82,6 +92,12 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		///
 		/// ↓描画処理ここから
 		///
+
+		// グリッド線の表示
+		DrawGrid(worldViewProjectionMatrix, viewportMatrix);
+
+		// 球体を表示
+		DrawSphere(sphere,worldViewProjectionMatrix, viewportMatrix,0x33FF33FF);
 
 		// 行列の数値を表示
 		
